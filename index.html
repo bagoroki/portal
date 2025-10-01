@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagian Organisasi Setda Kabupaten OKI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glow-size: 250px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #EFEFEF;
+            overflow-x: hidden;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: #5D5FEF;
+            top: -150px;
+            left: -150px;
+            animation: move-blob-1 15s infinite alternate;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: #AF40FF;
+            bottom: -200px;
+            right: -200px;
+            animation: move-blob-2 18s infinite alternate;
+        }
+        
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: #00A3FF;
+            bottom: 50px;
+            left: 100px;
+            animation: move-blob-3 12s infinite alternate;
+        }
+
+        @keyframes move-blob-1 {
+            from { transform: translate(-20px, 50px) scale(1); }
+            to { transform: translate(50px, 100px) scale(1.2); }
+        }
+
+        @keyframes move-blob-2 {
+            from { transform: translate(30px, -60px) scale(1); }
+            to { transform: translate(-80px, 40px) scale(0.9); }
+        }
+        
+        @keyframes move-blob-3 {
+            from { transform: translate(40px, -30px) scale(0.8); }
+            to { transform: translate(-30px, 50px) scale(1.1); }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .card-bounce {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card-bounce:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .card-bounce:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .modal-container {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transform: scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .modal-content {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.4s 0.1s ease, opacity 0.4s 0.1s ease;
+        }
+        
+        .modal-container.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Loader */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .loader {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            perspective: 800px;
+        }
+        .inner {
+            position: absolute;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        .inner.one {
+            left: 0%;
+            top: 0%;
+            animation: rotate-one 1.5s linear infinite;
+            border-bottom: 3px solid #EFEFEF;
+        }
+        .inner.two {
+            right: 0%;
+            top: 0%;
+            animation: rotate-two 1.5s linear infinite;
+            border-right: 3px solid #EFEFEF;
+        }
+        .inner.three {
+            right: 0%;
+            bottom: 0%;
+            animation: rotate-three 1.5s linear infinite;
+            border-top: 3px solid #EFEFEF;
+        }
+        @keyframes rotate-one {
+            0% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg); }
+            100% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg); }
+        }
+        @keyframes rotate-two {
+            0% { transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg); }
+            100% { transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg); }
+        }
+        @keyframes rotate-three {
+            0% { transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg); }
+            100% { transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg); }
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hide search cancel button */
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Loader Animation -->
+    <div id="loader" class="loader-wrapper">
+        <div class="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+        </div>
+    </div>
+
+    <!-- Background Blobs -->
+    <div class="background-gradient">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div id="app-content" class="min-h-screen w-full px-4 sm:px-6 lg:px-8 py-8 opacity-0 transition-opacity duration-500">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <header class="text-center mb-10">
+                <div class="inline-block relative p-1.5 glass-effect rounded-full shadow-lg">
+                    <img src="assets/images/logo.png" alt="Logo Instansi" class="w-24 h-24 rounded-full border-2 border-white/20">
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-bold mt-4 tracking-tight">BAGIAN ORGANISASI</h1>
+                <p class="text-white/60 mt-2 text-base sm:text-lg">SEKRETARIAT DAERAH KABUPATEN OGAN KOMERING ILIR</p>
+            </header>
+
+            <!-- Search Bar -->
+            <div class="mb-10 relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="search" class="w-5 h-5 text-white/40"></i>
+                </div>
+                <input type="search" id="search-input" placeholder="Cari layanan..." class="w-full pl-12 pr-4 py-3.5 rounded-2xl glass-effect focus:outline-none focus:ring-2 focus:ring-white/30 text-lg placeholder:text-white/40">
+            </div>
+
+            <!-- Main Cards Grid -->
+            <main id="main-cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                <!-- Card Data will be injected by JavaScript -->
+            </main>
+
+            <!-- Footer -->
+            <footer class="mt-16 text-center text-white/50">
+                <div class="flex justify-center items-center gap-6 mb-4">
+                    <a href="https://www.instagram.com/bagianorganisasisetda.oki" class="flex items-center gap-2 hover:text-white transition-colors">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                        <span>bagianorganisasisetda.oki</span>
+                    </a>
+                </div>
+                <p>&copy; 2025 Bagian Organisasi Setda Kab. OKI</p>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div id="modals-container">
+        <!-- Modal templates will be injected here -->
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DATA ---
+            const mainCardsData = [
+                { id: 'website', title: 'Website', icon: 'globe', image: 'assets/images/website.png', description: 'Website resmi Bagian Organisasi' },
+                { id: 'produk-hukum', title: 'Produk Hukum', icon: 'scale', image: 'assets/images/produkhukum.png', description: 'Akses produk hukum Bagian Organisasi' },
+                { id: 'konsultasi', title: 'Konsultasi', icon: 'messages-square', image: 'assets/images/konsultasi.png', description: 'Konsultasi dengan Bagian Organisasi' },
+                { id: 'survei', title: 'Survei Kepuasan Masyarakat', icon: 'star', image: 'assets/images/survei.png', directLink: 'https://siputri.kaboki.go.id/SKM/tambah?id_opd=42', description: 'Beri masukan anda terhadap layanan kami' }
+            ];
+
+            const modalData = {
+                'website': {
+                    title: 'Pilihan Website',
+                    items: [
+                        { title: 'Siputri', icon: 'ship', link: 'https://siputri.kaboki.go.id' },
+                        { title: 'Maturity', icon: 'trending-up', link: 'https://maturity.kaboki.go.id' }
+                    ]
+                },
+                'produk-hukum': {
+                    title: 'Pilihan Produk Hukum',
+                    items: [
+                        
+                        { title: 'Peraturan Pusat', icon: 'landmark', link: 'https://drive.google.com/drive/folders/1ZjKPXlU0DI3T-WESq7YFRzqfjShPL1KJ?usp=sharing' },
+                        { title: 'Peraturan Daerah', icon: 'building-2', link: 'https://drive.google.com/drive/folders/1fkJjZworfkzXpX7VJ3Mhg95yK7AAx8Le?usp=sharing' },
+                        { title: 'Peraturan Bupati', icon: 'file-text', link: 'https://drive.google.com/drive/folders/1Y7w80AVW9jC6MJbdHEAl5qV-TTJBQkLr?usp=sharing' },
+                        { title: 'Surat Keputusan Bupati', icon: 'file-check-2', link: 'https://drive.google.com/drive/folders/1xr5DyF9blC1xIYfGZYuAf3Iv4F5g89g3?usp=sharing' },
+                        { title: 'JDIH Kabupaten OKI', icon: 'landmark', link: 'https://jdih.kaboki.go.id' }
+                        
+                    ]
+                },
+                'konsultasi': {
+                    title: 'Pilihan Konsultasi',
+                    items: [
+                        { title: 'Anjab & Kelembagaan', icon: 'users', link: 'http://wa.me/6289524708840' },
+                        { title: 'Pelayanan Publik & Tata Laksana', icon: 'clipboard-list', link: 'http://wa.me/6289524708840' },
+                        { title: 'Kinerja & Reformasi Birokrasi', icon: 'rocket', link: 'http://wa.me/6289524708840' }
+                    ]
+                }
+            };
+            
+            // --- ELEMENTS ---
+            const loader = document.getElementById('loader');
+            const appContent = document.getElementById('app-content');
+            const mainCardsContainer = document.getElementById('main-cards-container');
+            const modalsContainer = document.getElementById('modals-container');
+            const searchInput = document.getElementById('search-input');
+
+            // --- FUNCTIONS ---
+            
+            // Initialize: Hide loader and show content
+            function init() {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    appContent.style.opacity = '1';
+                }, 1000); // Simulate loading time
+            }
+            
+            // Render main cards
+            function renderMainCards(filter = '') {
+                mainCardsContainer.innerHTML = '';
+                const filteredData = mainCardsData.filter(card => 
+                    card.title.toLowerCase().includes(filter.toLowerCase())
+                );
+
+                if (filteredData.length === 0) {
+                     mainCardsContainer.innerHTML = `<p class="text-white/60 text-center sm:col-span-2">Tidak ada layanan yang cocok dengan pencarian Anda.</p>`;
+                }
+
+                filteredData.forEach(card => {
+                    const cardElement = document.createElement(card.directLink ? 'a' : 'div');
+                    cardElement.className = 'main-card group relative p-5 rounded-3xl glass-effect overflow-hidden cursor-pointer card-bounce';
+                    cardElement.dataset.cardId = card.id;
+                    if (card.directLink) {
+                        cardElement.href = card.directLink;
+                    }
+
+                    cardElement.innerHTML = `
+                        <img src="${card.image}" alt="${card.title}" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-500 ease-in-out">
+                        <div class="relative z-10 flex flex-col h-full">
+                            <div class="flex-shrink-0 bg-white/10 rounded-xl w-12 h-12 flex items-center justify-center">
+                                <i data-lucide="${card.icon}" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="mt-auto">
+                                <h3 class="text-xl font-bold text-white tracking-tight">${card.title}</h3>
+                                <p class="text-white/60 text-sm mt-1">${card.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    mainCardsContainer.appendChild(cardElement);
+                });
+                lucide.createIcons();
+            }
+
+            // Render Modals
+            function renderModals() {
+                Object.keys(modalData).forEach(key => {
+                    const data = modalData[key];
+                    const modalContainer = document.createElement('div');
+                    modalContainer.id = `modal-${key}`;
+                    modalContainer.className = 'modal-container fixed inset-0 z-50 flex items-center justify-center p-4';
+                    modalContainer.innerHTML = `
+                        <div class="modal-backdrop absolute inset-0 bg-black/50"></div>
+                        <div class="modal-content relative w-full max-w-md p-6 glass-effect rounded-3xl">
+                            <button class="close-modal-btn absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                                <i data-lucide="x" class="w-6 h-6"></i>
+                            </button>
+                            <h2 class="text-2xl font-bold mb-6">${data.title}</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                ${data.items.map(item => `
+                                    <a href="${item.link}" class="modal-card-item group p-4 glass-effect rounded-2xl flex items-center gap-4 card-bounce">
+                                        <div class="bg-white/10 p-2.5 rounded-lg">
+                                            <i data-lucide="${item.icon}" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                        <span class="font-semibold">${item.title}</span>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                    modalsContainer.appendChild(modalContainer);
+                });
+            }
+
+            // Show Modal
+            function showModal(id) {
+                const modal = document.getElementById(`modal-${id}`);
+                if (modal) {
+                    modal.classList.add('active');
+                }
+            }
+
+            // Hide Modal
+            function hideModal(modal) {
+                 if(modal) {
+                    modal.classList.remove('active');
+                 }
+            }
+            
+            // --- EVENT LISTENERS ---
+            
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                renderMainCards(e.target.value);
+            });
+
+            // Main card click handler
+            mainCardsContainer.addEventListener('click', (e) => {
+                const card = e.target.closest('.main-card');
+                if (card && !card.href) { // Only open modal if it's not a direct link
+                    const cardId = card.dataset.cardId;
+                    showModal(cardId);
+                }
+            });
+
+            // Modal close handler
+            modalsContainer.addEventListener('click', (e) => {
+                if (e.target.matches('.modal-backdrop') || e.target.closest('.close-modal-btn')) {
+                    hideModal(e.target.closest('.modal-container'));
+                }
+            });
+
+
+            // --- INITIALIZATION ---
+            init();
+            renderMainCards();
+            renderModals();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
